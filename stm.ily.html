@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>STMat Valentine ❤️</title>
+<style>
+body {
+margin: 0;
+font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+background: #ffc6e3;
+color: #5b0740;
+overflow: hidden;
+transition: all 3s ease;
+}
+/* Landing link */
+#landing {
+width: 100vw;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background: radial-gradient(circle at top, #ffe6f3, #ff9ac7);
+flex-direction: column;
+gap: 1rem;
+}
+.stmat-link {
+font-size: 2.2rem;
+text-decoration: none;
+color: #fff;
+padding: 0.8rem 1.8rem;
+border-radius: 999px;
+background: linear-gradient(135deg, #ff4ca3, #ff7ad9);
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+box-shadow: 0 10px 20px rgba(255, 0, 150, 0.4);
+cursor: pointer;
+transition: transform 0.2s, box-shadow 0.2s;
+}
+.stmat-link:hover {
+transform: translateY(-3px) scale(1.05);
+box-shadow: 0 14px 28px rgba(255, 0, 150, 0.6);
+}
+.stmat-link span.heart {
+font-size: 2rem;
+animation: beat 1s infinite;
+}
+@keyframes beat {
+0%, 100% { transform: scale(1); }
+25% { transform: scale(1.2); }
+50% { transform: scale(0.9); }
+75% { transform: scale(1.15); }
+}
+/* Valentine page */
+#valentine-page {
+display: none;
+position: relative;
+width: 100vw;
+height: 100vh;
+background: #ffb6d9;
+overflow: hidden;
+}
+/* BLACKOUT OVERLAY */
+#blackout {
+position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: #000; opacity: 0; z-index: 1000; pointer-events: none;
+transition: opacity 2.5s ease-in-out;
+}
+#blackout.fade-in { opacity: 1; }
+#blackout.fade-out { opacity: 0; }
+/* GROWING HEART */
+#growingHeart {
+position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+font-size: 3.5rem; color: #ff69b4; z-index: 1001; opacity: 0;
+pointer-events: none;
+}
+#growingHeart.inflate {
+animation: heartInflate 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes heartInflate {
+0% {
+  opacity: 1; transform: translate(-50%, -50%) scale(0.2) rotate(-10deg);
+}
+40% {
+  opacity: 1; transform: translate(-50%, -50%) scale(1.8) rotate(5deg);
+  text-shadow: 0 0 40px #ff1493, 0 0 80px #ff69b4;
+}
+80% {
+  opacity: 1; transform: translate(-50%, -50%) scale(2.4) rotate(12deg);
+  text-shadow: 0 0 60px #ff1493, 0 0 120px #ff69b4;
+}
+100% {
+  opacity: 0; transform: translate(-50%, -50%) scale(2.8) rotate(20deg);
+  text-shadow: 0 0 80px #ff1493, 0 0 150px #ff69b4;
+}
+}
+.falling-flower {
+position: fixed;
+top: -5vh;
+font-size: 1.8rem;
+animation: fall linear infinite;
+pointer-events: none;
+opacity: 0.9;
+z-index: 1;
+}
+@keyframes fall {
+0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+10% { opacity: 1; }
+100% { transform: translateY(110vh) translateX(40px) rotate(360deg); opacity: 0; }
+}
+.content-wrapper {
+position: relative;
+z-index: 2;
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 1rem;
+}
+.to-gwishu {
+position: absolute;
+top: 20px;
+width: 100%;
+text-align: center;
+font-size: 2rem;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: #ff0f7b;
+text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+.question-box {
+padding: 1.4rem 3rem;
+border-radius: 24px;
+background: rgba(255, 255, 255, 0.25);
+box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 105, 180, 0.8);
+margin-bottom: 2.2rem;
+}
+.question {
+font-size: 3.6rem;
+margin: 0;
+color: #6a0044;
+text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 18px rgba(255, 105, 180, 0.9);
+}
+.sub-text {
+font-size: 1.1rem;
+margin-bottom: 2rem;
+color: #7c1b59;
+}
+.buttons {
+display: flex;
+gap: 1.5rem;
+justify-content: center;
+}
+button {
+border: none;
+padding: 0.9rem 2rem;
+border-radius: 999px;
+font-size: 1.2rem;
+cursor: pointer;
+transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+#yesBtn {
+background: linear-gradient(135deg, #ff4ca3, #ff9fda);
+color: white;
+padding: 1.1rem 2.6rem;
+font-size: 1.4rem;
+}
+#yesBtn:hover {
+transform: translateY(-3px) scale(1.05);
+box-shadow: 0 10px 22px rgba(255, 0, 120, 0.5);
+}
+#noBtn {
+background: #ffe3f1;
+color: #b3005e;
+}
+#noBtn:hover {
+transform: translateY(-1px) scale(1.03);
+box-shadow: 0 10px 18px rgba(179, 0, 94, 0.3);
+}
+.tiny-message {
+margin-top: 1.5rem;
+font-size: 1.1rem;
+color: #8a1a62;
+min-height: 1.4rem;
+}
+/* GIANT YAY MESSAGE */
+#bigYay {
+position: fixed;
+top: 20%;
+left: 50%;
+transform: translateX(-50%);
+font-size: 3rem;
+color: #ffffff;
+z-index: 1003;
+text-shadow: 0 0 25px #fff, 0 0 50px #ff69b4, 0 0 75px #ff1493;
+opacity: 0;
+font-weight: 700;
+letter-spacing: 2px;
+text-align: center;
+transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+}
+/* POPPING YAY TEXT DURING BLACKOUT */
+.pop-yay {
+position: fixed;
+font-size: 1.8rem;
+font-weight: 700;
+color: #ffeb3b;
+text-shadow: 0 0 10px #ff5722, 0 0 25px #ffffff;
+z-index: 1002;
+animation: yayPop 2.2s ease-out forwards;
+}
+@keyframes yayPop {
+0% { transform: scale(0) translateY(40px); opacity: 0; }
+20% { transform: scale(1.3) translateY(0); opacity: 1; }
+60% { transform: scale(1) translateY(-10px); opacity: 1; }
+100% { transform: scale(0.8) translateY(-40px); opacity: 0; }
+}
+/* GLOWING TYPEWRITER MESSAGE - FIXED EMOJI SUPPORT */
+#loveMessage {
+position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%);
+font-size: 2.1rem; color: #ffffff; text-align: center; z-index: 1002;
+text-shadow: 0 0 25px #fff, 0 0 50px #ff69b4, 0 0 75px #ff1493, 0 0 100px #ff69b4;
+opacity: 0; font-weight: 600; max-width: 90vw; line-height: 1.5;
+/* FIXED: Emoji-compatible font stack */
+font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+letter-spacing: 1px;
+}
+#loveMessage .letter {
+font-family: inherit !important;
+}
+.letter {
+display: inline-block; opacity: 0; transform: scale(0) rotate(-10deg);
+transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.letter.animate {
+opacity: 1; transform: scale(1) rotate(0deg);
+animation: glowPulse 2s infinite;
+}
+@keyframes glowPulse {
+0%, 100% { text-shadow: 0 0 25px #fff, 0 0 50px #ff69b4, 0 0 75px #ff1493; }
+50% { text-shadow: 0 0 35px #fff, 0 0 70px #ff69b4, 0 0 100px #ff1493, 0 0 120px #ff69b4; }
+}
+/* FIREWORKS */
+.firework { position: fixed; pointer-events: none; z-index: 1001; }
+.firework-burst { position: absolute; font-size: 2.5rem; }
+/* SHRINKING NO BUTTON */
+#noBtn.shrink { transition: transform 0.3s ease; }
+/* FUNKY NO MESSAGES */
+.funky-message {
+position: fixed; pointer-events: none; z-index: 20;
+font-size: 1.6rem; font-weight: bold; color: #ff5722;
+text-shadow: 3px 3px 0 #fff, 0 0 15px #ffeb3b;
+animation: funkyPop 2.5s ease-out forwards;
+transform-origin: center;
+}
+@keyframes funkyPop {
+0% { transform: scale(0) rotate(-360deg); opacity: 0; }
+15% { transform: scale(1.4) rotate(30deg); opacity: 1; }
+35% { transform: scale(0.9) rotate(-20deg) skew(5deg); }
+65% { transform: scale(1.2) rotate(15deg) skew(-3deg); }
+100% { transform: scale(1) rotate(0deg); opacity: 0; }
+}
+.particle {
+position: fixed;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+pointer-events: none;
+opacity: 0;
+z-index: 5;
+}
+@keyframes burst {
+0% { transform: translate(0,0) scale(1); opacity: 1; }
+100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<!-- Simple first screen link -->
+<div id="landing">
+<a href="#" id="enterLink" class="stmat-link">
+<span>STMat.com</span>
+<span class="heart">💗</span>
+</a>
+</div>
+<!-- Valentine main page -->
+<div id="valentine-page">
+<div class="content-wrapper">
+<div class="to-gwishu">Hey mami<3💌</div>
+<div class="question-box">
+<div class="question">Will you be my Valentine? 💖</div>
+</div>
+<div class="sub-text">
+Pretty please? 🌸✨ dont faint please.... ndapota😭😭😭 💕
+</div>
+<div class="buttons">
+<button id="yesBtn">Yessss daddyyyyy 😁</button>
+<button id="noBtn">Nooooo, never 😢</button>
+</div>
+<div class="tiny-message" id="tinyMessage"></div>
+</div>
+</div>
+
+<!-- EFFECTS -->
+<div id="blackout"></div>
+<div id="growingHeart">💖</div>
+<div id="bigYay">YAYYY I'M SO HAPPY YOU SAID YES!! 🥹💖</div>
+<div id="loveMessage"></div>
+
+<!-- Audio elements -->
+<audio id="bgSoft" loop>
+<source src="soft-love-song.mp3" type="audio/mpeg">
+</audio>
+<audio id="bgWapunza">
+<source src="wapunza-garry-mapanzure.mp3" type="audio/mpeg">
+</audio>
+<audio id="crowdYay">
+<source src="crowd-yay.mp3" type="audio/mpeg">
+</audio>
+<audio id="crowdBoo">
+<source src="crowd-boo.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const landing = document.getElementById("landing");
+const valentinePage = document.getElementById("valentine-page");
+const enterLink = document.getElementById("enterLink");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const tinyMessage = document.getElementById("tinyMessage");
+const blackout = document.getElementById("blackout");
+const growingHeart = document.getElementById("growingHeart");
+const bigYay = document.getElementById("bigYay");
+const loveMessage = document.getElementById("loveMessage");
+const bgSoft = document.getElementById("bgSoft");
+const bgWapunza = document.getElementById("bgWapunza");
+const crowdYay = document.getElementById("crowdYay");
+const crowdBoo = document.getElementById("crowdBoo");
+
+let noClickCount = 0;
+let blackoutIntervalFireworks = null;
+let blackoutIntervalYays = null;
+
+const noMessages = [
+"Are you sure? 🥺",
+"You can bite me if you say yes💔",
+"This button is a little shy... 😳",
+"Maybe try the other button? 😘",
+"I promise I'm cute, say yes? 🌸",
+"Ahhhh jahman 😭😭😶‍🌫️",
+"Last chance before I disappear... 👀"
+];
+
+enterLink.addEventListener("click", (e) => {
+e.preventDefault();
+landing.style.display = "none";
+valentinePage.style.display = "block";
+startFlowers();
+bgSoft.volume = 0.45;
+bgSoft.play().catch(() => {});
+});
+
+function startFlowers() {
+const flowerEmojis = ["🌸", "🌷", "🌺", "💐", "🌹"];
+const createFlower = () => {
+const span = document.createElement("span");
+span.className = "falling-flower";
+span.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+span.style.left = Math.random() * 100 + "vw";
+const duration = 8 + Math.random() * 6;
+span.style.animationDuration = duration + "s";
+document.body.appendChild(span);
+setTimeout(() => span.remove(), duration * 1000);
+};
+setInterval(createFlower, 700);
+}
+
+// 🔥 YES BUTTON: CINEMATIC SEQUENCE
+yesBtn.addEventListener("click", () => {
+bgSoft.pause();
+yesBtn.style.pointerEvents = "none";
+noBtn.style.pointerEvents = "none";
+
+// 1. FADE TO BLACK
+blackout.style.display = "block";
+blackout.classList.remove("fade-out");
+blackout.classList.add("fade-in");
+
+// start fireworks + yay text WHILE screen is black & heart is growing
+startBlackoutFireworksAndYays();
+
+setTimeout(() => {
+  // 2. GROWING HEART FROM CENTER
+  growingHeart.style.opacity = "1";
+  growingHeart.classList.add("inflate");
+
+  // Start music + crowd
+  bgWapunza.currentTime = 0;
+  bgWapunza.volume = 0.75;
+  bgWapunza.play().catch(() => {});
+  crowdYay.currentTime = 0;
+  crowdYay.play().catch(() => {});
+
+  // 3. AFTER HEART ANIMATION, SHOW BIG YAY AND THEN FADE BACK
+  setTimeout(() => {
+    // Show giant YAY
+    bigYay.style.opacity = "1";
+    bigYay.style.transform = "translateX(-50%) scale(1.05)";
+
+    // stop blackout fireworks/yays after a bit
+    stopBlackoutEffects();
+
+    setTimeout(() => {
+      // 4. FADE BACK TO PINK
+      blackout.classList.remove("fade-in");
+      blackout.classList.add("fade-out");
+
+      setTimeout(() => {
+        blackout.style.display = "none";
+        growingHeart.style.display = "none";
+        bigYay.style.opacity = "0";
+        bigYay.style.transform = "translateX(-50%) scale(1)";
+
+        // 5. TYPEWRITER LOVE MESSAGE
+        typeLoveMessage();
+      }, 1500);
+    }, 2200);
+  }, 3200); // wait for heartInflate (~3.5s) + a bit
+}, 700);
+});
+
+// 🔥 NO BUTTON: SHRINKING BEHAVIOR
+noBtn.addEventListener("click", () => {
+noClickCount++;
+crowdBoo.currentTime = 0;
+crowdBoo.play().catch(() => {});
+bgSoft.play().catch(() => {});
+
+const idx = Math.min(noClickCount - 1, noMessages.length - 1);
+tinyMessage.textContent = noMessages[idx];
+
+const scale = Math.max(0, 1 - noClickCount * 0.12);
+noBtn.style.transform = `scale(${scale})`;
+
+if (scale <= 0.05) {
+  noBtn.style.display = "none";
+  tinyMessage.textContent = "Okay okay, I'll stop asking... but my heart still picks you 💗";
+}
+});
+
+// 🔥 BLACKOUT EFFECTS HELPERS
+function startBlackoutFireworksAndYays() {
+blackoutIntervalFireworks = setInterval(() => {
+  createFireworks(true); // special mode for center-ish fireworks
+}, 600);
+
+blackoutIntervalYays = setInterval(() => {
+  createPoppingYay();
+}, 500);
+
+setTimeout(() => {
+  stopBlackoutEffects();
+}, 5500);
+}
+
+function stopBlackoutEffects() {
+if (blackoutIntervalFireworks) {
+  clearInterval(blackoutIntervalFireworks);
+  blackoutIntervalFireworks = null;
+}
+if (blackoutIntervalYays) {
+  clearInterval(blackoutIntervalYays);
+  blackoutIntervalYays = null;
+}
+}
+
+function createPoppingYay() {
+const yayTexts = ["YAYYY!! 🥳", "IM SO HAPPY!! 💖", "AAAAA 🥹✨", "WOOOHOOO! 🎉", "NDOKUDAAAA 💕"];
+const span = document.createElement("div");
+span.className = "pop-yay";
+span.textContent = yayTexts[Math.floor(Math.random() * yayTexts.length)];
+span.style.left = Math.random() * 80 + 10 + "vw";
+span.style.top = Math.random() * 60 + 10 + "vh";
+document.body.appendChild(span);
+setTimeout(() => span.remove(), 2200);
+}
+
+function createFireworks(centerMode = false) {
+const fireworks = ["💖", "✨", "🌸", "🌷", "💞", "🎉", "⭐", "💫", "🥰", "😍"];
+const bursts = centerMode ? 3 : 15;
+
+for (let burst = 0; burst < bursts; burst++) {
+  setTimeout(() => {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+
+    if (centerMode) {
+      fw.style.left = (Math.random() * 30 + 35) + "vw"; // more central
+      fw.style.top = (Math.random() * 30 + 30) + "vh";
+    } else {
+      fw.style.left = (Math.random() * 90 + 5) + "vw";
+      fw.style.top = (Math.random() * 90 + 5) + "vh";
+    }
+
+    document.body.appendChild(fw);
+
+    for (let i = 0; i < 40; i++) {
+      const particle = document.createElement("div");
+      particle.className = "firework-burst particle";
+      particle.textContent = fireworks[Math.floor(Math.random() * fireworks.length)];
+      particle.style.left = "50%";
+      particle.style.top = "50%";
+
+      const angle = (Math.PI * 2 * i) / 40;
+      const distance = (centerMode ? 120 : 140) + Math.random() * (centerMode ? 100 : 160);
+      particle.style.setProperty("--dx", (Math.cos(angle) * distance) + "px");
+      particle.style.setProperty("--dy", (Math.sin(angle) * distance) + "px");
+
+      fw.appendChild(particle);
+      setTimeout(() => particle.remove(), 2500);
+    }
+    setTimeout(() => fw.remove(), 2500);
+  }, burst * (centerMode ? 120 : 200));
+}
+}
+
+function typeLoveMessage() {
+const message = "You're the most beautiful dream I've ever woken up to 🥰💭. Every call 📞, every text 💌, and especially every moment with your head on my chest(yes those 2 times) 🤗 makes my whole world go quiet in the best way ✨. You are the cutest, most precious thing that has ever happened to me 😍🌸, and I love you more than my own words or actions will ever be able to show 💕💖. I'm so honoured to have you as my Valentine and i hope i`ll get this opportunity again 🎀❤️. I love you mami.. mwahhhhhh 😚😚😚… you can stop smiling now before your cheeks start hurting hehe 😝💕🥹";
+
+loveMessage.innerHTML = message.split('').map(char =>
+  `<span class="letter">${char === ' ' ? '&nbsp;' : char}</span>`
+).join('');
+
+loveMessage.style.opacity = "1";
+
+const letters = loveMessage.querySelectorAll('.letter');
+letters.forEach((letter, i) => {
+  setTimeout(() => {
+    letter.classList.add('animate');
+  }, i * 70);
+});
+}
+</script>
+</body>
+</html>
